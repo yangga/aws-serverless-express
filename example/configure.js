@@ -44,10 +44,10 @@ function modifySimpleProxyFile() {
     const simpleProxyApiModified = simpleProxyApi
         .replace(/YOUR_ACCOUNT_ID/g, accountId)
         .replace(/YOUR_AWS_REGION/g, region)
+        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'Func')
+        .replace(/YOUR_PRODUCT_STACK/g, product+'Stack')
+        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'S3Bucket')
         .replace(/YOUR_PRODUCT/g, product)
-        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'-func')
-        .replace(/YOUR_PRODUCT_STACK/g, product+'-stack')
-        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'-s3bucket')
 
     fs.writeFileSync(simpleProxyApiPath, simpleProxyApiModified, 'utf8')
 }
@@ -58,10 +58,10 @@ function modifyPackageFile() {
     const packageJsonModified = packageJson
         .replace(/YOUR_UNIQUE_BUCKET_NAME/g, bucketName)
         .replace(/YOUR_AWS_REGION/g, region)
+        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'Func')
+        .replace(/YOUR_PRODUCT_STACK/g, product+'Stack')
+        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'S3Bucket')
         .replace(/YOUR_PRODUCT/g, product)
-        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'-func')
-        .replace(/YOUR_PRODUCT_STACK/g, product+'-stack')
-        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'-s3bucket')
 
     fs.writeFileSync(packageJsonPath, packageJsonModified, 'utf8')
 }
