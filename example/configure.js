@@ -33,6 +33,7 @@ if (availableRegions.indexOf(region) === -1) {
 
 modifySimpleProxyFile()
 modifyPackageFile()
+modifyCloudFormationFile()
 
 function printParamSample() {
     console.error('param => [accountId] [bucketName] [region] [product]')
@@ -64,4 +65,18 @@ function modifyPackageFile() {
         .replace(/YOUR_PRODUCT/g, product)
 
     fs.writeFileSync(packageJsonPath, packageJsonModified, 'utf8')
+}
+
+function modifyCloudFormationFile() {
+    const filePath = './cloudformation.json'
+    const f = fs.readFileSync(packageJsonPath, 'utf8')
+    const fModified = f
+        .replace(/YOUR_UNIQUE_BUCKET_NAME/g, bucketName)
+        .replace(/YOUR_AWS_REGION/g, region)
+        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'Func')
+        .replace(/YOUR_PRODUCT_STACK/g, product+'Stack')
+        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'S3Bucket')
+        .replace(/YOUR_PRODUCT/g, product)
+
+    fs.writeFileSync(filePath, fModified, 'utf8')
 }
