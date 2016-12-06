@@ -1,8 +1,8 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "AWS Serverless Express.",
+    "Description": "description here...",
     "Parameters": {
-        "AwsServerlessExpressS3Bucket": {
+        "YOUR_PRODUCT_S3BUCKET": {
             "Type": "String",
             "Description": "The S3 bucket in which the lambda function code is stored. Bucket names are region-unique, so you must change this."
         },
@@ -24,10 +24,10 @@
         "ApiGatewayApi": {
             "Type": "AWS::ApiGateway::RestApi",
             "Properties": {
-                "Description": "AWS Serverless Express API",
+                "Description": "YOUR_PRODUCT",
                 "BodyS3Location": {
                     "Bucket": {
-                        "Ref": "AwsServerlessExpressS3Bucket"
+                        "Ref": "YOUR_PRODUCT_S3BUCKET"
                     },
                     "Key": {
                         "Ref": "ApiGatewaySwaggerS3Key"
@@ -103,13 +103,13 @@
             "Properties": {
                 "Code": {
                     "S3Bucket": {
-                        "Ref": "AwsServerlessExpressS3Bucket"
+                        "Ref": "YOUR_PRODUCT_S3BUCKET"
                     },
                     "S3Key": {
                         "Ref": "LambdaFunctionS3Key"
                     }
                 },
-                "FunctionName": "AwsServerlessExpressFunction",
+                "FunctionName": "YOUR_PRODUCT_FUNCTION",
                 "Handler": "lambda.handler",
                 "MemorySize": 128,
                 "Role": {
