@@ -5,15 +5,24 @@ const args = process.argv.slice(2)
 const accountId = args[0]
 const bucketName = args[1]
 const region = args[2] || 'us-east-1'
+const product = args[3]
 const availableRegions = ['us-east-1', 'us-west-2', 'eu-west-1', 'eu-central-1', 'ap-northeast-1', 'ap-northeast-2', 'ap-southeast-1', 'ap-southeast-2']
 
 if (!accountId || accountId.length !== 12) {
     console.error('You must supply a 12 digit account id as the first argument')
+    printParamSample()
     return
 }
 
 if (!bucketName) {
     console.error('You must supply a bucket name as the second argument')
+    printParamSample()
+    return
+}
+
+if (!product) {
+    console.error('You must supply product name')
+    printParamSample()
     return
 }
 
@@ -25,12 +34,20 @@ if (availableRegions.indexOf(region) === -1) {
 modifySimpleProxyFile()
 modifyPackageFile()
 
+function printParamSample() {
+    console.error('param => [accountId] [bucketName] [region] [product]')
+}
+
 function modifySimpleProxyFile() {
     const simpleProxyApiPath = './simple-proxy-api.yaml'
     const simpleProxyApi = fs.readFileSync(simpleProxyApiPath, 'utf8')
     const simpleProxyApiModified = simpleProxyApi
         .replace(/YOUR_ACCOUNT_ID/g, accountId)
         .replace(/YOUR_AWS_REGION/g, region)
+        .replace(/YOUR_PRODUCT/g, product)
+        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'-func')
+        .replace(/YOUR_PRODUCT_STACK/g, product+'-stack')
+        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'-s3bucket')
 
     fs.writeFileSync(simpleProxyApiPath, simpleProxyApiModified, 'utf8')
 }
@@ -41,6 +58,10 @@ function modifyPackageFile() {
     const packageJsonModified = packageJson
         .replace(/YOUR_UNIQUE_BUCKET_NAME/g, bucketName)
         .replace(/YOUR_AWS_REGION/g, region)
+        .replace(/YOUR_PRODUCT/g, product)
+        .replace(/YOUR_PRODUCT_FUNCTION/g, product+'-func')
+        .replace(/YOUR_PRODUCT_STACK/g, product+'-stack')
+        .replace(/YOUR_PRODUCT_S3BUCKET/g, product+'-s3bucket')
 
     fs.writeFileSync(packageJsonPath, packageJsonModified, 'utf8')
 }
