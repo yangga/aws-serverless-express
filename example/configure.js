@@ -69,7 +69,7 @@ function modifyPackageFile() {
 
 function modifyCloudFormationFile() {
     const filePath = './cloudformation.json'
-    const f = fs.readFileSync(packageJsonPath, 'utf8')
+    const f = fs.readFileSync(filePath, 'utf8')
     const fModified = f
         .replace(/YOUR_UNIQUE_BUCKET_NAME/g, bucketName)
         .replace(/YOUR_AWS_REGION/g, region)
