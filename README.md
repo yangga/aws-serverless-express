@@ -29,7 +29,7 @@ Windows users must have 7-Zip CLI installed http://www.7-zip.org/download.html a
 This guide assumes you have already [set up an AWS account](http://docs.aws.amazon.com/AmazonSimpleDB/latest/DeveloperGuide/AboutAWSAccounts.html) and have the [AWS CLI](https://aws.amazon.com/cli/) installed.
 
 1. From your preferred project directory: `git clone https://github.com/awslabs/aws-serverless-express.git && cd aws-serverless-express/example`.
-2. Run `npm run config <accountId> <bucketName> [region] <product>` to configure the example, eg. `npm run config 123456789012 my-bucket us-west-2 AwsServerlessExpressApi`. This modifies `package.json` and  `simple-proxy-api.yaml` with your account ID, bucket, region (region defaults to `us-east-1`) and product name. If the bucket you specify does not yet exist, the next step will create it for you. This step modifies the existing files in-place; if you wish to make changes to these settings, you will need to modify `package.json` and `simple-proxy-api.yaml` manually.
+2. Run `npm run config <accountId> <bucketName> <product> [region]` to configure the example, eg. `npm run config 123456789012 my-bucket AwsServerlessExpressApi us-west-2`. This modifies `package.json` , `simple-proxy-api.yaml` and `cloudformation.json` with your account ID, bucket, product name and region (region defaults to `us-east-1`). If the bucket you specify does not yet exist, the next step will create it for you. This step modifies the existing files in-place; if you wish to make changes to these settings, you will need to modify `package.json` and `simple-proxy-api.yaml` manually.
 3. Run `npm run setup` (Windows users: `npm run win-setup`) - this installs the node dependencies, creates the S3 bucket (if it does not already exist), packages and uploads your serverless Express application assets to S3, uploads the API Swagger file to S3, and finally spins up a CloudFormation stack, which creates your API Gateway API and Lambda Function.
 4. After the setup command completes, open the AWS CloudFormation console https://console.aws.amazon.com/cloudformation/home and switch to the region you specified. Select the stack which named your product, and wait several minutes for the status to change to `CREATE_COMPLETE`, then click the `ApiUrl` value under the __Outputs__ section - this will open a new page with your running API. The API index lists the resources available in the example Express server (`app.js`), along with example `curl` commands.
 
@@ -66,23 +66,23 @@ app.use(awsServerlessExpressMiddleware.eventContext())
 
 #### Pros
 
- - Pay for what you use
- - No infrastructure to manage
- - Auto-scaling with no configuration needed
- - [Usage Plans](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html)
- - [Caching](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
- - [Authorization](http://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)
- - [Staging](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html)
- - [SDK Generation](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html)
- - [API Monitoring](http://docs.aws.amazon.com/apigateway/latest/developerguide/monitoring-cloudwatch.html)
+- Pay for what you use
+- No infrastructure to manage
+- Auto-scaling with no configuration needed
+- [Usage Plans](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html)
+- [Caching](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html)
+- [Authorization](http://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-control-access-to-api.html)
+- [Staging](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-deploy-api.html)
+- [SDK Generation](http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-generate-sdk.html)
+- [API Monitoring](http://docs.aws.amazon.com/apigateway/latest/developerguide/monitoring-cloudwatch.html)
 
 #### Cons
 
- - Currently limited to Node.js 4.3 (LTS)
- - For apps that may not see traffic for several minutes at a time, you could see [cold starts](https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/)
- - May be more expensive for high-traffic apps
- - Cannot use native libraries (aka [Addons](https://nodejs.org/api/addons.html)) unless you package your app on an EC2 machine running Amazon Linux
- - Stateless only
- - Multiple headers with same name not supported
- - Currently no support for binary data
- - API Gateway has a timeout of 30 seconds, and Lambda has a maximum execution time of 5 minutes.
+- Currently limited to Node.js 4.3 (LTS)
+- For apps that may not see traffic for several minutes at a time, you could see [cold starts](https://aws.amazon.com/blogs/compute/container-reuse-in-lambda/)
+- May be more expensive for high-traffic apps
+- Cannot use native libraries (aka [Addons](https://nodejs.org/api/addons.html)) unless you package your app on an EC2 machine running Amazon Linux
+- Stateless only
+- Multiple headers with same name not supported
+- Currently no support for binary data
+- API Gateway has a timeout of 30 seconds, and Lambda has a maximum execution time of 5 minutes.

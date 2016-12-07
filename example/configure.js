@@ -4,8 +4,8 @@ const fs = require('fs')
 const args = process.argv.slice(2)
 const accountId = args[0]
 const bucketName = args[1]
-const region = args[2] || 'us-east-1'
-const product = args[3]
+const product = args[2]
+const region = args[3] || 'us-east-1'
 const availableRegions = ['us-east-1', 'us-west-2', 'eu-west-1', 'eu-central-1', 'ap-northeast-1', 'ap-northeast-2', 'ap-southeast-1', 'ap-southeast-2']
 
 if (!accountId || accountId.length !== 12) {
@@ -36,7 +36,7 @@ modifyPackageFile()
 modifyCloudFormationFile()
 
 function printParamSample() {
-    console.error('param => [accountId] [bucketName] [region] [product]')
+    console.error('param => <accountId> <bucketName> <product> [region]')
 }
 
 function modifySimpleProxyFile() {
